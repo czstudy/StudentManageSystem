@@ -63,6 +63,12 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 		return teacher;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.dao.ITeacherDAO#list()
+	 * @author Tom
+	 * @return List¼¯ºÏ
+	 */
 	@Override
 	public List<Teacher> list() throws Exception {
 		Connection connection = null;
@@ -93,6 +99,12 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 		return result;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.dao.ITeacherDAO#login(java.lang.String, java.lang.String)
+	 * @param   String teacherCode  String password
+	 * 
+	 */
 	@Override
 	public Teacher login(String teacherCode, String password) throws Exception {
 		Connection connection = null;
