@@ -27,7 +27,7 @@ public class TeacherDAOMysqlImplTest {
 		try {
 			teacher=teacherDAOMysqlImpl.login("001", "321");
 			if(teacher!=null){
-				//System.out.println("name:"+teacher.getName());
+				System.out.println("name:"+teacher.getName());
 			}
 			assertEquals("tom", teacher.getName());
 		} catch (Exception e) {

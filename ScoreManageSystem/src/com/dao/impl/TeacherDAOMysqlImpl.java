@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -96,14 +97,33 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 	public Teacher login(String teacherCode, String password) throws Exception {
 		Connection connection = null;
 		PreparedStatement ps = null;
+		Statement statementTeacher=null;
 		ResultSet rs=null;
-		Teacher teacher=null;		
+		Teacher teacher=null;	
+		/*
+		 * 连接字符串
+		 */
+		String sql="select * from teacher where teacherCode= '"+teacherCode+"' and password= '"+password+"'";
+		
 		try {
 			connection = DataBase.getConn();
+			
+			/*
+			 * Statement实现
+			 */
+			statementTeacher=connection.createStatement();
+			rs=statementTeacher.executeQuery(sql);
+			/*
+			 
 			ps = connection.prepareStatement("select * from teacher where teacherCode= ? and password= ?");
 			ps.setString(1, teacherCode);
 			ps.setString(2, password);
 			rs=ps.executeQuery();
+			
+			
+		   */
+			
+			
 			if(rs.next()){
 				teacher=new Teacher();
 				teacher.setAge(rs.getInt("age"));
@@ -116,7 +136,7 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 			throw sqle;
 		} finally {
 			rs.close();
-			ps.close();
+			//ps.close();
 			connection.close();
 		}
 		return teacher;
