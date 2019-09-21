@@ -147,7 +147,7 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 		} catch (Exception sqle) {
 			throw sqle;
 		} finally {
-			rs.close();
+			//rs.close();
 			//ps.close();
 			connection.close();
 		}
