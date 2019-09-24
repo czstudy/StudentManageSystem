@@ -14,6 +14,61 @@ import com.dto.Teacher;
 
 public class TeacherDAOMysqlImpl implements ITeacherDAO {
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.dao.ITeacherDAO#login(java.lang.String, java.lang.String)
+	 * @param   String teacherCode  String password
+	 * 
+	 */
+	@Override
+	public Teacher login(String teacherCode, String password) throws Exception {
+		Connection connection = null;
+		Statement statementTeacher=null;
+		ResultSet rs=null;
+		Teacher teacher=null;	
+		/*
+		 * 连接字符串
+		 */
+		String sql="select * from teacher where teacherCode= '"+teacherCode+"' and password= '"+password+"'";
+		try {
+			/*
+			 * Statement实现
+			 */
+			connection=DataBase.getConn();
+			statementTeacher=connection.createStatement();
+			rs=statementTeacher.executeQuery(sql);
+			
+			if(rs.next()){
+				teacher=new Teacher();
+				teacher.setAge(rs.getInt("age"));
+				teacher.setName(rs.getString("name"));
+				teacher.setPassword(rs.getString("password"));
+				teacher.setSex(rs.getString("sex"));
+				teacher.setTeacherCode(rs.getString("teacherCode"));
+			}
+		} catch (Exception sqle) {
+			throw sqle;
+		} finally {
+			rs.close();
+			statementTeacher.close();
+			connection.close();
+		}
+		return teacher;
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	@Override
 	public boolean delete(String teacherCode) throws Exception {
 		Connection connection = null;
@@ -99,61 +154,7 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 		return result;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.dao.ITeacherDAO#login(java.lang.String, java.lang.String)
-	 * @param   String teacherCode  String password
-	 * 
-	 */
-	@Override
-	public Teacher login(String teacherCode, String password) throws Exception {
-		Connection connection = null;
-		PreparedStatement ps = null;
-		Statement statementTeacher=null;
-		ResultSet rs=null;
-		Teacher teacher=null;	
-		/*
-		 * 连接字符串
-		 */
-		String sql="select * from teacher where teacherCode= '"+teacherCode+"' and password= '"+password+"'";
-		
-		try {
-			connection = DataBase.getConn();
-			
-			/*
-			 * Statement实现
-			 */
-			statementTeacher=connection.createStatement();
-			rs=statementTeacher.executeQuery(sql);
-			/*
-			 
-			ps = connection.prepareStatement("select * from teacher where teacherCode= ? and password= ?");
-			ps.setString(1, teacherCode);
-			ps.setString(2, password);
-			rs=ps.executeQuery();
-			
-			
-		   */
-			
-			
-			if(rs.next()){
-				teacher=new Teacher();
-				teacher.setAge(rs.getInt("age"));
-				teacher.setName(rs.getString("name"));
-				teacher.setPassword(rs.getString("password"));
-				teacher.setSex(rs.getString("sex"));
-				teacher.setTeacherCode(rs.getString("teacherCode"));
-			}
-		} catch (Exception sqle) {
-			throw sqle;
-		} finally {
-			//rs.close();
-			//ps.close();
-			connection.close();
-		}
-		return teacher;
-	}
-
+	
 	@Override
 	public boolean save(Teacher teacher) throws Exception {
 		Connection connection = null;
