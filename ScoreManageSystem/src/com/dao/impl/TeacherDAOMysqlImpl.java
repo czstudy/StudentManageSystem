@@ -26,17 +26,25 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 		Statement statementTeacher=null;
 		ResultSet rs=null;
 		Teacher teacher=null;	
+		PreparedStatement teacherPrepareStatement=null;
+		
 		/*
 		 * 连接字符串
 		 */
-		String sql="select * from teacher where teacherCode= '"+teacherCode+"' and password= '"+password+"'";
+		//String sql="select * from teacher where teacherCode= '"+teacherCode+"' and password= '"+password+"'";
+		String sql="select * from teacher where teacherCode= ? and password= ?";
 		try {
 			/*
 			 * Statement实现
 			 */
 			connection=DataBase.getConn();
-			statementTeacher=connection.createStatement();
-			rs=statementTeacher.executeQuery(sql);
+			
+			//statementTeacher=connection.createStatement();
+			teacherPrepareStatement=connection.prepareStatement(sql);
+			teacherPrepareStatement.setString(1, teacherCode);
+			teacherPrepareStatement.setString(2, password);
+			//rs=statementTeacher.executeQuery(sql);
+			rs=teacherPrepareStatement.executeQuery();
 			
 			if(rs.next()){
 				teacher=new Teacher();
@@ -50,12 +58,18 @@ public class TeacherDAOMysqlImpl implements ITeacherDAO {
 			throw sqle;
 		} finally {
 			rs.close();
-			statementTeacher.close();
+			//statementTeacher.close();
+			teacherPrepareStatement.close();
 			connection.close();
 		}
 		return teacher;
 	}
 
+	
+	
+	
+	
+	
 	
 	
 	

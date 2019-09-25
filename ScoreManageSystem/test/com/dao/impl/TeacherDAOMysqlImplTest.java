@@ -24,9 +24,10 @@ public class TeacherDAOMysqlImplTest {
 	public void testLogin() {
 //		fail("Not yet implemented");
 		Teacher teacher=null;
-		String teacherCode="001";
-		String password="321";
-		
+		String teacherCode="0011";
+		String password="3210";
+		teacherCode="1' or '1'='1";
+		password="1' or '1'='1";
 		try {
 			teacher=teacherDAOMysqlImpl.login(teacherCode,password);
 			if(teacher!=null){
